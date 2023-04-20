@@ -107,7 +107,7 @@ export function proxyLogger(
         if (navigator.sendBeacon) {
           return navigator.sendBeacon(url, body)
         }
-        return fetch(url, { method: "POST", body, keepalive: true })
+        return fetch(url, { method: "POST", body, keepalive: true, credentials: "include" })
       }
     }
     return clientLogger as unknown as LoggerInstance

@@ -14,7 +14,7 @@ firebase-debug.log
 ui-debug.log
 .pnpm-debug.log
 .husky
-
+.pnpm-store*
 # Dependencies
 node_modules
 

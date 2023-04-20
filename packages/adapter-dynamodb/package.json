@@ -54,7 +54,7 @@
     "@shelf/jest-dynamodb": "^2.1.0",
     "@types/uuid": "^9.0.0",
     "jest": "^27.4.3",
-    "next-auth": "workspace:*"
+    "@answeroverflow/next-auth": "workspace:*"
   },
   "dependencies": {
     "uuid": "^9.0.0"

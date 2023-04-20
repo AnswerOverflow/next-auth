@@ -51,15 +51,15 @@ const __NEXTAUTH: AuthClientConfig = {
   basePath: parseUrl(process.env.NEXTAUTH_URL).path,
   baseUrlServer: parseUrl(
     process.env.NEXTAUTH_URL_INTERNAL ??
-      process.env.NEXTAUTH_URL ??
-      process.env.VERCEL_URL
+    process.env.NEXTAUTH_URL ??
+    process.env.VERCEL_URL
   ).origin,
   basePathServer: parseUrl(
     process.env.NEXTAUTH_URL_INTERNAL ?? process.env.NEXTAUTH_URL
   ).path,
   _lastSync: 0,
   _session: undefined,
-  _getSession: () => {},
+  _getSession: () => { },
 }
 
 const broadcast = BroadcastChannel()
@@ -91,15 +91,15 @@ type UpdateSession = (data?: any) => Promise<Session | null>
 
 export type SessionContextValue<R extends boolean = false> = R extends true
   ?
-      | { update: UpdateSession; data: Session; status: "authenticated" }
-      | { update: UpdateSession; data: null; status: "loading" }
+  | { update: UpdateSession; data: Session; status: "authenticated" }
+  | { update: UpdateSession; data: null; status: "loading" }
   :
-      | { update: UpdateSession; data: Session; status: "authenticated" }
-      | {
-          update: UpdateSession
-          data: null
-          status: "unauthenticated" | "loading"
-        }
+  | { update: UpdateSession; data: Session; status: "authenticated" }
+  | {
+    update: UpdateSession
+    data: null
+    status: "unauthenticated" | "loading"
+  }
 
 export const SessionContext = React.createContext?.<
   SessionContextValue | undefined
@@ -214,8 +214,8 @@ export async function signIn<
 >(
   provider?: LiteralUnion<
     P extends RedirectableProviderType
-      ? P | BuiltInProviderType
-      : BuiltInProviderType
+    ? P | BuiltInProviderType
+    : BuiltInProviderType
   >,
   options?: SignInOptions,
   authorizationParams?: SignInAuthorizationParams
@@ -243,9 +243,8 @@ export async function signIn<
   const isEmail = providers[provider].type === "email"
   const isSupportingReturn = isCredentials || isEmail
 
-  const signInUrl = `${baseUrl}/${
-    isCredentials ? "callback" : "signin"
-  }/${provider}`
+  const signInUrl = `${baseUrl}/${isCredentials ? "callback" : "signin"
+    }/${provider}`
 
   const _signInUrl = `${signInUrl}?${new URLSearchParams(authorizationParams)}`
 
@@ -254,6 +253,7 @@ export async function signIn<
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
+    credentials: "include",
     // @ts-expect-error
     body: new URLSearchParams({
       ...options,
@@ -299,11 +299,12 @@ export async function signOut<R extends boolean = true>(
 ): Promise<R extends true ? undefined : SignOutResponse> {
   const { callbackUrl = window.location.href } = options ?? {}
   const baseUrl = apiBaseUrl(__NEXTAUTH)
-  const fetchOptions = {
+  const fetchOptions: RequestInit = {
     method: "post",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
+    credentials: "include",
     // @ts-expect-error
     body: new URLSearchParams({
       csrfToken: await getCsrfToken(),
@@ -410,7 +411,7 @@ export function SessionProvider(props: SessionProviderProps) {
     return () => {
       __NEXTAUTH._lastSync = 0
       __NEXTAUTH._session = undefined
-      __NEXTAUTH._getSession = () => {}
+      __NEXTAUTH._getSession = () => { }
     }
   }, [])
 
@@ -466,8 +467,8 @@ export function SessionProvider(props: SessionProviderProps) {
       status: loading
         ? "loading"
         : session
-        ? "authenticated"
-        : "unauthenticated",
+          ? "authenticated"
+          : "unauthenticated",
       async update(data) {
         if (loading || !session) return
         setLoading(true)

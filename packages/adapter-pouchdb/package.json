@@ -50,7 +50,7 @@
     "@next-auth/tsconfig": "workspace:*",
     "@types/pouchdb": "^6.4.0",
     "jest": "^27.4.3",
-    "next-auth": "workspace:*",
+    "@answeroverflow/next-auth": "workspace:*",
     "pouchdb": "^8.0.1",
     "pouchdb-adapter-memory": "^8.0.1",
     "pouchdb-find": "^8.0.1"
